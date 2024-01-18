@@ -1,0 +1,27 @@
+<head>
+    <link rel="stylesheet" href="/assets/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="/assets/img/favicon 3.ico" type="image/x-icon">
+</head>
+
+<div class="sign-up">
+    <div id="sty">
+        <h2>Enter Your Login Details</h2>
+
+    <form action="/user/login" method="post">
+        <label for="email"></label>
+        
+        <input type="email" placeholder=" Enter Your Email" name="email" required>
+<br>
+<br>
+        <label for="password"></label>
+        <input type="text" placeholder=" Enter Your Password" name="password" required>
+<br>
+<br>
+        <button type="submit">Sign In</button>
+    </form>
+
+    <p>If don't have any account yet, create one <a href="/account/signup"> <b>Create an account </b></a></p>
+</div>
+</div>
+<%- include('partials/footer') -%>

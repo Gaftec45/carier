@@ -2,27 +2,69 @@
     <link rel="stylesheet" href="/assets/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" href="/assets/img/favicon 3.ico" type="image/x-icon">
-</head>
-<%- include('partials/header') -%>
 
-<div class="sign-up">
-    <div id="sty">
-        <h2>Enter Your Login Details</h2>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background: #f4f4f4;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+            }
+            .login-form {
+                background: white;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            input[type="email"], input[type="password"] {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+            button[type="submit"] {
+                width: 100%;
+                background: #007bff;
+                color: white;
+                padding: 10px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+            button[type="submit"]:hover {
+                background-color: #0056b3;
+            }
+        </style>
+    </head>
+    <body>
 
-    <form action="/user/login" method="post">
-        <label for="email"></label>
-        
-        <input type="email" placeholder=" Enter Your Email" name="email" required>
-<br>
-<br>
-        <label for="password"></label>
-        <input type="text" placeholder=" Enter Your Password" name="password" required>
-<br>
-<br>
-        <button type="submit">Sign In</button>
-    </form>
+    <div class="login-form">
+        <h2>Login</h2>
+        <div class="error">
+            <% if (messages.error) { %>
+                <div style="color: red;">
+                    <%= messages.error %>
+                </div>
+            <% } %>
+            <% if (messages.success) { %>
+                <div style="color: green;">
+                    <%= messages.success %>
+                </div>
+            <% } %>
+        </div>
+        <form action="/account/login" method="post">
+            <input type="email" name="email" placeholder="Email Address" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account yet...? <a href="/account/register"> Register</a></p>
+    </div>
 
-    <p>If don't have any account yet, create one <a href="/account/signup"> <b>Create an account </b></a></p>
-</div>
-</div>
-<%- include('partials/footer') -%>
+    </body>
+

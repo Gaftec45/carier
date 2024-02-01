@@ -162,7 +162,7 @@ a{
     background:#eeeaea;
     padding: 20px;
     margin: auto;
-    text-align: center;
+    /* text-align: center; */
     height: 500px;
 }
 .sign-up input{
@@ -183,8 +183,9 @@ a{
     background: #c9c9c9;
     color: #fff;
     width: 560px;
-    height: 400px;
+    height: auto;
     padding: 10px;
     margin: auto;
     border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }

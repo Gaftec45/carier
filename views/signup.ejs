@@ -2,30 +2,76 @@
     <link rel="stylesheet" href="/assets/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" href="/assets/img/favicon 3.ico" type="image/x-icon">
-
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .signup-form {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button[type="submit"] {
+            width: 100%;
+            background: #007bff;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
-<%- include('partials/header') -%>
+<body>
 
-<div class="sign-up">
-    <div id="sty">
-    <h2>Enter Your Details To Create Account</h2>
-    <form action="/user/signup" method="post">
-        <label for="username"></label>
-        <input type="text" placeholder="   Input Your Username" name="name" id="username" required>
-        <br>
-        <br>
-        <label for="email"></label>
-        <input type="email" placeholder="   Input Your Email" name="email" required>
-<br>
-<br>
-        <label for="password"></label>
-        <input type="password" placeholder="   Input Your Password"  id="password" name="password" required>
-<br>
-<br>
+<div class="signup-form">
+    <h2>Sign Up</h2>
+    <div class="error">
+        <% if (messages.error) { %>
+            <div style="color: red;">
+                <%= messages.error %>
+            </div>
+        <% } %>
+        <% if (messages.success) { %>
+            <div style="color: green;">
+                <%= messages.success %>
+            </div>
+        <% } %>
+    </div>
+    <form action="/account/register" method="post">
+        <input type="text" name="username" placeholder="Enter Username" required>
+        <input type="email" name="email" placeholder="Email Address" required>
+        <input type="password" name="password" placeholder="Password" required>
         <button type="submit">Sign Up</button>
     </form>
-
-    <p>Already have an account? <a href="/account/login"><b>Login</b></a></p>
-    </div>
+    <p>Already have an account...? <a href="/account/login"> login</a></p>
 </div>
-<%- include('partials/footer') -%>
+<script>
+    function myFunction() {
+  var x = document.getElementById("password");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>

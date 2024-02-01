@@ -1,22 +1,59 @@
+require('dotenv').config();
 const express = require('express');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const flash = require('express-flash');
+const passport = require('passport');
+const mongoose = require('mongoose');
+const accountRoutes = require('./routes/account');
+const dashRoutes = require('./routes/dashboard');
+const User = require('./models/users');
 const app = express();
-const PORT = 3000;
 
-//  view engine
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.error('Error connecting to MongoDB:', err));
+
+// Set up session middleware with a fallback secret key
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'defaultsessionsecret',
+  resave: false,
+  saveUninitialized: true,
+}));
+
+// Passport Initialization
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Passport Configuration
+passport.use(User.createStrategy()); // Assuming passport-local-mongoose is used for User model
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+// Set up express-flash middleware
+app.use(flash());
+
+// Set up view engine
 app.set('view engine', 'ejs');
 
+// Body parser middleware to parse request bodies
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-
-const accRouter = require('./routes/account');
-const userRouter = require('./routes/dashboard');
-
-app.use(express.static('public'))
-app.use('/account', accRouter)
-app.use('/user', userRouter)
+// Serve static files from the 'public' directory
+app.use(express.static('public'));
 
 // Routes
-app.get('/', (req, res)=>{
-    res.render('index');
-})
+app.use('/account', accountRoutes);
+app.use('/user', dashRoutes);
 
-app.listen(PORT, ()=>{console.log(`server is runing on ${PORT}`);})
+app.get('/', (req, res) => {
+    res.render('index');
+});
+
+// Listening on port from environment variable or fallback to 4500
+const PORT = process.env.PORT_I || 4500;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});

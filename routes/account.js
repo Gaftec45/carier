@@ -77,4 +77,9 @@ router.post('/login', checkNotAuthenticated, passport.authenticate('local', {
     failureFlash: true
 }));
 
+router.get('/logout', (req, res) => {
+    req.logout(); // Passport middleware function to clear the login session
+    res.redirect('/'); // Redirect to the home page or any other desired page
+});
+
 module.exports = router;

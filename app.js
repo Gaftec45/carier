@@ -10,14 +10,15 @@ const dashRoutes = require('./routes/dashboard');
 const User = require('./models/users');
 const app = express();
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('Error connecting to MongoDB:', err));
+mongoose.connect(process.env.MONGODB_URI, {
+    serverSelectionTimeoutMS: 5000, // Extend timeout to 5000ms or more
+  }).then(() => console.log('Connected to MongoDB'))
+    .catch(err => console.error('Could not connect to MongoDB:', err));
+  
 
 // Set up session middleware with a fallback secret key
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'defaultsessionsecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
 }));
@@ -34,6 +35,8 @@ passport.deserializeUser(User.deserializeUser());
 // Set up express-flash middleware
 app.use(flash());
 
+mongoose.set('debug', true);
+
 // Set up view engine
 app.set('view engine', 'ejs');
 
@@ -49,7 +52,7 @@ app.use('/account', accountRoutes);
 app.use('/user', dashRoutes);
 
 app.get('/', (req, res) => {
-    res.render('index');
+    res.render('index'); 
 });
 
 // Listening on port from environment variable or fallback to 4500

@@ -1,17 +1,19 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/users');
-const argon2 = require('argon2');
+const crypto = require('crypto');
+
+// Function to verify the password
+function verifyPassword(storedPassword, submittedPassword) {
+    const hashedSubmittedPassword = crypto.createHash('sha256').update(submittedPassword).digest('hex');
+    return storedPassword === hashedSubmittedPassword;
+}
 
 passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
     try {
         const user = await User.findOne({ email });
-        if (!user) {
-            return done(null, false, { message: 'Invalid email' });
-        }
-        const isValidPassword = verifyPassword(user.password, password);
-        if (!isValidPassword) {
-            return done(null, false, { message: 'Invalid password' });
+        if (!user || !verifyPassword(user.password, password)) {
+            return done(null, false, { message: 'Incorrect email or password.' });
         }
         return done(null, user);
     } catch (error) {
@@ -24,21 +26,9 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-    try {
-        const user = await User.findById(id);
-        done(null, user);
-    } catch (error) {
-        done(error);
-    }
+    User.findById(id, function(err, user) {
+        done(err, user);
+    });
 });
-
-// Function to verify password using crypto
-async function verifyPassword(hashedPassword, plainTextPassword) {
-    try {
-        return await argon2.verify(hashedPassword, plainTextPassword);
-    } catch (error) {
-        throw new Error('Error verifying password');
-    }
-}
 
 module.exports = passport;

@@ -7,6 +7,7 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const accountRoutes = require('./routes/account');
 const dashRoutes = require('./routes/dashboard');
+const {initialize} =require('./passport/passConfig')
 const User = require('./models/users');
 const app = express();
 
@@ -31,6 +32,11 @@ app.use(passport.session());
 passport.use(User.createStrategy()); // Assuming passport-local-mongoose is used for User model
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+initialize(passport,
+    id => users.find(user => user.id === id),
+    email => users.find(user => user.email === email)
+)
 
 // Set up express-flash middleware
 app.use(flash());

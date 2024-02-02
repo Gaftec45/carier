@@ -12,14 +12,19 @@ function verifyPassword(storedPassword, submittedPassword) {
 passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
     try {
         const user = await User.findOne({ email });
-        if (!user || !verifyPassword(user.password, password)) {
-            return done(null, false, { message: 'Incorrect email or password.' });
+        if (!user) {
+            return done(null, false, { message: 'No user with that email' });
+        }
+        const hashedSubmittedPassword = crypto.createHash('sha256').update(password).digest('hex');
+        if (user.password !== hashedSubmittedPassword) {
+            return done(null, false, { message: 'Incorrect password.' });
         }
         return done(null, user);
     } catch (error) {
         return done(error);
     }
 }));
+
 
 passport.serializeUser((user, done) => {
     done(null, user.id);

@@ -35,7 +35,7 @@ router.post('/register', checkNotAuthenticated, async (req, res) => {
         const hashedPassword = hashPassword(password);
         const user = new User({ username, email, password: hashedPassword });
         await user.save();
-        req.flash('success', 'Registration successful');
+        req.flash('success', 'Your Registration was successful');
         res.render('login');
     } catch (error) {
         console.error(error);

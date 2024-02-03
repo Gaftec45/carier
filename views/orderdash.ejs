@@ -91,6 +91,7 @@
                     <li><span>Destination:</span> <%= order.destination %></li>
                     <li><span>Pickup Station:</span> <%= order.pickupStation %></li>
                     <li><span>Package Details:</span> <%= order.packageDetails %></li>
+                    <li><span>Order Status:</span> <%= order.status %></li> <!-- Added order status -->
                 </ul>
                 <div class="action-buttons">
                     <button onclick="updateOrder('<%= order._id %>')">Update</button>
@@ -114,6 +115,7 @@
     </script>
 </body>
 </html>
+
 
 
 

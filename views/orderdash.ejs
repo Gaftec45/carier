@@ -50,7 +50,7 @@
 <body>
     <h2>My Orders</h2>
     <% if (orders.length === 0) { %>
-        <p>No orders found.</p>
+        <p>No orders found. <a href="/order/create-order">Create Order</a></p>
     <% } else { %>
         <% orders.forEach(order => { %>
             <div class="order">

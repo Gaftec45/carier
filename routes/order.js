@@ -10,10 +10,10 @@ router.get('/create-order', checkAuthenticated, (req, res)=>{
 // Route to create a new order
 router.post('/create-order', checkAuthenticated, async (req, res) => {
   try {
-    const { senderName, receiverName, destination, pickupStation, packageDetails} = req.body;
+    const { senderName, receiverName, destination, pickupStation, packageDetails, status} = req.body;
     const userId = req.user._id; // Assuming you're using passport.js for authentication
 
-    const order = new Order({ user: userId, senderName, receiverName, destination, pickupStation, packageDetails });
+    const order = new Order({ user: userId, senderName, receiverName, destination, pickupStation, packageDetails, status });
     await order.save();
 
     // Add order to the user's orders array

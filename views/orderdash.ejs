@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        p {
+            text-align: center;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <h2>My Orders</h2>
+    <% if (orders.length === 0) { %>
+        <p>No orders found.</p>
+    <% } else { %>
+        <table>
+            <thead>
+                <tr>
+                    <th>Sender Name</th>
+                    <th>Receiver Name</th>
+                    <th>Destination</th>
+                    <th>Pickup Station</th>
+                    <th>Package Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% orders.forEach(order => { %>
+                    <tr>
+                        <td><%= order.senderName %></td>
+                        <td><%= order.receiverName %></td>
+                        <td><%= order.destination %></td>
+                        <td><%= order.pickupStation %></td>
+                        <td><%= order.packageDetails %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } %>
+</body>
+</html>
+
+
+
+
+
+
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px;
+        }
+
+        li {
+            background-color: #fff;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        li:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        p {
+            text-align: center;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <h2>My Orders</h2>
+    <% if (orders.length === 0) { %>
+        <p>No orders found.</p>
+    <% } else { %>
+        <ul>
+            <% orders.forEach(order => { %>
+                <li>Product: <%= order.product %>, Quantity: <%= order.quantity %></li>
+            <% }); %>
+        </ul>
+    <% } %>
+</body>
+</html> -->

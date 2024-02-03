@@ -9,13 +9,24 @@ const accountRoutes = require('./routes/account');
 const dashRoutes = require('./routes/dashboard');
 const {initialize} =require('./passport/passConfig')
 const User = require('./models/users');
+const Order = require('./models/orders');
+const orderRoute = require('./routes/order');
+const URI =process.env.MONGODB_URI || process.env.MONGO_URI;
 const app = express();
 
-mongoose.connect(process.env.MONGODB_URI, {
-    serverSelectionTimeoutMS: 5000, // Extend timeout to 5000ms or more
-  }).then(() => console.log('Connected to MongoDB'))
-    .catch(err => console.error('Could not connect to MongoDB:', err));
-  
+
+async function mongoDB() {
+  try {
+      await mongoose.connect(URI, {
+          serverSelectionTimeoutMS: 5000 // Extend timeout to 5000ms or more
+      });
+      console.log('Connected to MongoDB');
+      return mongoose.connection; // Return the mongoose connection object
+  } catch (error) {
+      console.error('Error connecting to MongoDB:', error);
+      throw error;
+  }
+}
 
 // Set up session middleware with a fallback secret key
 app.use(session({
@@ -56,13 +67,26 @@ app.use(express.static('public'));
 // Routes
 app.use('/account', accountRoutes);
 app.use('/user', dashRoutes);
+app.use('/order', orderRoute)
 
 app.get('/', (req, res) => {
     res.render('index'); 
 });
 
 // Listening on port from environment variable or fallback to 4500
-const PORT = process.env.PORT_I || 4500;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+async function startServer() {
+  try {
+      await mongoDB(); // Wait for MongoDB connection to be established
+
+      const PORT = process.env.PORT || 4500; // Adjust the default port as needed
+      app.listen(PORT, () => {
+          console.log(`Server running on port ${PORT}`);
+      });
+
+  } catch (error) {
+      console.error('Error starting server:', error);
+      process.exit(1);
+  }
+}
+
+startServer();

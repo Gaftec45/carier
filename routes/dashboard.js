@@ -7,4 +7,8 @@ router.get('/dashboard', checkAuthenticated, (req, res) => {
   res.render('dashboard');
 });
 
+router.get('/order', (req, res)=>{
+  res.render('orderdash');
+})  
+
 module.exports = router;

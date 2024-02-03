@@ -12,6 +12,76 @@
             padding: 0;
         }
 
+        .order {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 600px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        p {
+            text-align: center;
+            color: #888;
+        }
+
+        .order-details {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .order-details li {
+            margin-bottom: 10px;
+        }
+
+        .order-details li span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2>My Orders</h2>
+    <% if (orders.length === 0) { %>
+        <p>No orders found.</p>
+    <% } else { %>
+        <% orders.forEach(order => { %>
+            <div class="order">
+                <ul class="order-details">
+                    <li><span>Sender Name:</span> <%= order.senderName %></li>
+                    <li><span>Receiver Name:</span> <%= order.receiverName %></li>
+                    <li><span>Destination:</span> <%= order.destination %></li>
+                    <li><span>Pickup Station:</span> <%= order.pickupStation %></li>
+                    <li><span>Package Details:</span> <%= order.packageDetails %></li>
+                </ul>
+            </div>
+        <% }); %>
+    <% } %>
+</body>
+</html>
+
+
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
         h2 {
             text-align: center;
             margin-top: 20px;
@@ -80,7 +150,7 @@
 
 
 
-<!--<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">

@@ -78,7 +78,7 @@ async function startServer() {
   try {
       await mongoDB(); // Wait for MongoDB connection to be established
 
-      const PORT = process.env.PORT || 4500; // Adjust the default port as needed
+      const PORT = process.env.PORT_I || 4500; // Adjust the default port as needed
       app.listen(PORT, () => {
           console.log(`Server running on port ${PORT}`);
       });

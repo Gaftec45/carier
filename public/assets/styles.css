@@ -54,6 +54,13 @@ a{
     background-size: cover;
     display: inline-block;
 }
+#maincontent1{
+    width: 95%;
+    padding: 20px;
+    background-image: url(/assets/img/LEAD\ BANNER.jpg);
+    background-size: cover;
+    display: inline-block;
+}
 #maincontent img{
     width: 1305px;
     margin: auto;

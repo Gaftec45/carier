@@ -175,8 +175,8 @@
                                             <td><%= order.packageDetails %></td>
                                             <td style="color: #dc3545;"><%= order.status %></td>
                                             <td>
-                                                <span class="btn-action btn-edit" onclick="updateOrder('<%= order._id %>')"><i class="fa fa-pencil" aria-hidden="true"></i></span>
-                                                <span class="btn-action btn-delete" onclick="deleteOrder('<%= order._id %>')"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                                                <span class="btn-action btn-edit" data-orderid="<%= order._id %>"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+                                                <span class="btn-action btn-delete" data-orderid="<%= order._id %>"><i class="fa fa-trash" aria-hidden="true"></i></span>
                                             </td>
                                         </tr>
                                     <% }); %>
@@ -203,60 +203,46 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-     // Function to update an order
-function updateOrder(orderId) {
-    // Retrieve updated order data, for example, from form inputs
-    const updatedData = {
-        // Define your updated data here
-        // For example:
-        // productName: document.getElementById('productName').value,
-        // quantity: document.getElementById('quantity').value,
-        // ...
-    };
 
-    // Send a PUT request to update the order
-    fetch(`/orders/${orderId}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updatedData)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Failed to update order');
-        }
-        // Handle success, for example, display a success message
-        alert('Order updated successfully');
-        // Optionally, you can redirect to a different page or reload the current page
-        // window.location.reload();
-    })
-    .catch(error => {
-        console.error('Error updating order:', error);
-        alert('Failed to update order');
-    });
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const updateButtons = document.querySelectorAll('.btn-edit');
+                updateButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                    const orderId = button.getAttribute('data-orderid');
+                    window.location.href = `/order/orders/${orderId}`;
+                    });
+                });
 
-// Function to delete an order
-function deleteOrder(orderId) {
-    // Send a DELETE request to delete the order
-    fetch(`/dashboard/${orderId}`, {
-        method: 'DELETE'
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Failed to delete order');
-        }
-        // Handle success, for example, display a success message
-        alert('Order deleted successfully');
-        // Optionally, you can redirect to a different page or reload the current page
-        // window.location.reload();
-    })
-    .catch(error => {
-        console.error('Error deleting order:', error);
-        alert('Failed to delete order');
+
+const cancelButtons = document.querySelectorAll('.btn-delete');
+    cancelButtons.forEach(button => {
+        button.addEventListener('click', async () => {
+            const orderId = button.getAttribute('data-orderid');
+
+            // Display a confirmation dialog
+            const isConfirmed = window.confirm('Are you sure you want to cancel this order?');
+
+            if (isConfirmed) {
+                try {
+                    const response = await fetch(`/order/orders/${orderId}`, {
+                        method: 'DELETE',
+                    });
+
+                    if (response.ok) {
+                        // Assuming a successful deletion, update the UI accordingly.
+                        // For example, remove the row from the table without reloading the page.
+                        button.closest('tr').remove();
+                    } else {
+                        // Handle errors or show a message to the user
+                        console.error('Error deleting order:', response.statusText);
+                    }
+                } catch (error) {
+                    console.error('Error deleting order:', error.message);
+                }
+            }
+        });
     });
-}
+});
 </script>
 </body>
 </html>

@@ -38,30 +38,59 @@ router.get('/orders', async (req, res) => {
     }
 });
 
-  // Update order route
-router.put('/orders/:orderId', checkAuthenticated, async (req, res) => {
+router.get('/orders/:orderId', checkAuthenticated, async (req, res) => {
+  try {
       const orderId = req.params.orderId;
-      const updateData = req.body;
-  
-      try {
-          const updatedOrder = await Order.findByIdAndUpdate(orderId, updateData, { new: true });
-          res.json(updatedOrder);
-      } catch (error) {
-          console.error('Error updating order:', error);
-          res.status(500).json({ error: 'Failed to update order' });
-      }
-  });
+      const order = await Order.findById(orderId);
+
+      // Render the update-order.ejs view and pass the order variable
+      res.render('update-order', { order });
+  } catch (error) {
+      console.error('Error rendering update-order view:', error);
+      res.status(500).send('Internal Server Error');
+  }
+});
+
+  // Update order route
+  router.post('/edit-orders/:orderId', checkAuthenticated, async (req, res)=>{
+    const orderId = req.params.orderId;
+    try{
+        //fetch order and update 
+        const updateOrder = await Order.findByIdAndUpdate(orderId, {
+            senderName: req.body.senderName, 
+            receiverName: req.body.receiverName, 
+            destination: req.body.destination,
+            pickupStation: req.body.pickupStation,
+            packageDetails: req.body.packageDetails,
+        }, {new: true});
+
+        if (updateOrder){
+            res.redirect('/user/dashboard');
+        } else {
+            res.status(404).json({message: 'Order Not Found'});
+        }
+    }
+    catch(error){
+        console.error('Error updating Order: ', )
+    }
+})
   
   // Delete order route
   router.delete('/orders/:orderId', async (req, res) => {
       const orderId = req.params.orderId;
-  
+
       try {
-          await Order.findByIdAndDelete(orderId);
-          res.render('orderdash'); // No content, successful deletion
+          // Implement logic to delete the order by ID from the database
+          const deletedOrder = await Order.findByIdAndDelete(orderId);
+  
+          if (deletedOrder) {
+              res.status(200).json({ message: 'Order successfully canceled.' });
+          } else {
+              res.status(404).json({ message: 'Order not found.'});
+          }
       } catch (error) {
-          console.error('Error deleting order:', error);
-          res.status(500).json({ error: 'Failed to delete order' });
+          console.error('Error canceling order:', error);
+          res.status(500).json({ message: 'Internal Server Error' });
       }
   }); 
  

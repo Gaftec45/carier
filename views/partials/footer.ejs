@@ -1,5 +1,5 @@
 <style>
-    .footer {
+.footer {
     background-color: #2c3e50;
     color: #bdc3c7;
     text-align: left;
@@ -7,17 +7,18 @@
     padding: 20px 0;
 }
 
-.footer .footer-content {
+.footer-content {
     display: flex;
-    justify-content: space-around;
     flex-wrap: wrap;
-    margin: 0 auto;
+    justify-content: space-around;
     max-width: 1200px;
-    padding: 20px;
+    margin: 0 auto;
 }
 
 .footer-section {
     margin-bottom: 20px;
+    flex: 1 1 40%;
+    max-width: 250px;
 }
 
 .footer-section h2 {
@@ -57,6 +58,14 @@
     color: #3498db;
 }
 
+@media (max-width: 768px) {
+    .footer-section {
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+}
+
+
 </style>
 
 <footer class="footer">
@@ -90,11 +99,11 @@
             <i class="fa fa-pinterest"></i>
             <i class="fa fa-twitter"></i>
         </div>
-        <div class="footer-bottom">
-            <span>Our carrier is to fulfill your order and get it at your door step</span>
-            <div class="logo">
-                <span><b>sendIT</b></span>
-            </div>
+    </div>
+    <div class="footer-bottom">
+        <span>Our carrier is to fulfill your order and get it at your door step</span>
+        <div class="logo">
+            <span><b>sendIT</b></span>
         </div>
     </div>
 </footer>

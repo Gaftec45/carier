@@ -70,6 +70,7 @@
             justify-content: space-around;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0;
         }
         .footer-section {
             margin-bottom: 20px;
@@ -112,16 +113,19 @@
                 max-width: 100%;
             }
             .dashboard-banner {
-                height: 200px;
+                height: 300px;
             }
             .dashboard-banner h1 {
                 font-size: 1.5rem;
+            }
+            .content-wrapper {
+                padding: 0;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-12">
     <%- include('partials/nav') -%>

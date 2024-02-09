@@ -47,6 +47,7 @@
             padding: 20px;
             border-radius: 0;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: block;
         }
         .des {
             background-image: linear-gradient(to right, #000000, #2e2e2e);
@@ -150,7 +151,8 @@
                     <h1><%= user.username %>, Here Is Your Orders Overview </h1>
                 </div>
                 <div class="content-wrapper">
-                    <h3>My Orders</h3>
+                    <h3 style="float: left;">My Orders</h3>
+                    <h5 style="float: right;"><a style="background-color: #3498db; color: #fff;padding: 5px;" href="/order/create-order">Create New Order</a></h5>
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover order-table">
                             <thead class="thead-light">

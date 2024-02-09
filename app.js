@@ -11,6 +11,7 @@ const {initialize} =require('./passport/passConfig')
 const User = require('./models/users');
 const Order = require('./models/orders');
 const orderRoute = require('./routes/order');
+const adminRoute = require('./routes/admin');
 const URI =process.env.MONGODB_URI || process.env.MONGO_URI;
 const app = express();
 
@@ -67,7 +68,8 @@ app.use(express.static('public'));
 // Routes
 app.use('/account', accountRoutes);
 app.use('/user', dashRoutes);
-app.use('/order', orderRoute)
+app.use('/order', orderRoute);
+app.use('/', adminRoute)
 
 app.get('/', (req, res) => {
     res.render('index'); 

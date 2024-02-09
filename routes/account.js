@@ -67,7 +67,7 @@ router.post('/register', checkNotAuthenticated, async (req, res) => {
         res.render('login');
     } catch (error) {
         console.error(error);
-        res.status(500).send('Internal Server Error');
+        res.render('404');
     }
 }); 
 

@@ -1,29 +1,358 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">  
-    <link rel="stylesheet" href="/assets/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SendIT Company</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="icon" href="/assets/img/favicon 3.ico" type="image/x-icon">
-    <title></title>
+    <!-- <link rel="stylesheet" href="/assets/styles.css"> -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin-top: 0;
+        }
+        .dashboard-header{
+            background-image: linear-gradient(to right, #000000, #2e2e2e);
+            color: #fff;
+            padding: 20px 15px;
+            border-radius: 0;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .des {
+            background-image: linear-gradient(to right, #000000, #2e2e2e);
+            color: #fff;
+            padding: 20px 15px;
+            border-radius: 0;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .dashboard-header h2 {
+            margin: 0;
+        }
+        .content-wrapper {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .order-table th, .order-table td {
+            vertical-align: middle;
+        }
+        .btn-action {
+            padding: 5px 10px;
+            color: #fff;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        .btn-edit {
+            background-color: #ffc107;
+        }
+        .btn-delete {
+            background-color: #dc3545;
+        }
+        .dashboard-banner {
+            background: url(/assets/img/LEAD\ BANNER.jpg) no-repeat center center;
+            background-size: cover;
+            height: 500px;
+            color: #fff;
+            text-align: center;
+            border-radius: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .dashboard-banner h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <%- include('partials/nav') -%>
-    </header>
-    <div id="maincontent1">
-        <!-- <img src="/assets/img/deli.jpg" alt="our banner"> -->
-        <div class="content">
-            <h1>sendIT Company Is Here</h1>
-            <p>if you're looking for the best platform for your package to be shipped to any
-                destination of your choice we're here to server the best quatilty, reliable service you've never 
-                experienced before...<br>
-            </p>
-            <button id="btn"><a href="/order/create-order">Create order</a></button>
-            <button id="btn2"><a href="/order/my-orders">Manage Order</a></button>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+    <%- include('partials/nav') -%>
+
+                <div class="dashboard-header">
+                    <h2>Welcome, <%= user.username %> to SendIT Dashboard</h2>
+                </div>
+                <div class="dashboard-banner">
+                    <h1><%= user.username %>, Here Is Your Orders Overview </h1>
+                </div>
+                <div class="content-wrapper">
+                    <h3>My Orders</h3>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover order-table">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Sender Name</th>
+                                    <th>Receiver Name</th>
+                                    <th>Destination</th>
+                                    <th>Pickup Station</th>
+                                    <th>Package Details</th>
+                                    <th>Order Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (orders.length > 0) { %>
+                                    <% orders.forEach(order => { %>
+                                        <tr>
+                                            <td><%= order.senderName %></td>
+                                            <td><%= order.receiverName %></td>
+                                            <td><%= order.destination %></td>
+                                            <td><%= order.pickupStation %></td>
+                                            <td><%= order.packageDetails %></td>
+                                            <td><%= order.status %></td>
+                                            <td>
+                                                <span class="btn-action btn-edit" onclick="updateOrder('<%= order._id %>')"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+                                                <span class="btn-action btn-delete" onclick="deleteOrder('<%= order._id %>')"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                                            </td>
+                                        </tr>
+                                    <% }); %>
+                                <% } else { %>
+                                    <tr>
+                                        <td colspan="7" class="text-center">No orders to show</td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="des">
+                <span>have you seen our new update</span>
+            </div>
         </div>
     </div>
     <footer>
         <%- include('partials/footer') -%>
     </footer>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+     // Function to update an order
+function updateOrder(orderId) {
+    // Retrieve updated order data, for example, from form inputs
+    const updatedData = {
+        // Define your updated data here
+        // For example:
+        // productName: document.getElementById('productName').value,
+        // quantity: document.getElementById('quantity').value,
+        // ...
+    };
+
+    // Send a PUT request to update the order
+    fetch(`/orders/${orderId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to update order');
+        }
+        // Handle success, for example, display a success message
+        alert('Order updated successfully');
+        // Optionally, you can redirect to a different page or reload the current page
+        // window.location.reload();
+    })
+    .catch(error => {
+        console.error('Error updating order:', error);
+        alert('Failed to update order');
+    });
+}
+
+// Function to delete an order
+function deleteOrder(orderId) {
+    // Send a DELETE request to delete the order
+    fetch(`/dashboard/${orderId}`, {
+        method: 'DELETE'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to delete order');
+        }
+        // Handle success, for example, display a success message
+        alert('Order deleted successfully');
+        // Optionally, you can redirect to a different page or reload the current page
+        // window.location.reload();
+    })
+    .catch(error => {
+        console.error('Error deleting order:', error);
+        alert('Failed to delete order');
+    });
+}
+</script>
 </body>
 </html>
+
+
+
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">  
+    <link rel="stylesheet" href="/asset/styles.css">
+    <link rel="icon" href="/assets/img/favicon-3.ico" type="image/x-icon">
+    <title>SendIT Company</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #maincontent1 {
+            width: 95%;
+            padding: 20px;
+            background-image: url(/assets/img/LEAD-BANNER.jpg);
+            background-size: cover;
+            margin: auto;
+            text-align: center;
+        }
+        h1, p {
+            color: #fff; /* Assuming a dark image, for better visibility */
+        }
+        .content button {
+            padding: 8px 15px;
+            margin: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .content button:hover {
+            background-color: #0056b3;
+        }
+        .content a {
+            color: white;
+            text-decoration: none;
+        }
+        table {
+            width: 90%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            background-color: #fff;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        /* Added CSS for responsive table display */
+        @media screen and (max-width: 600px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            tr { border: 1px solid #ccc; }
+            td {
+                border: none;
+                border-bottom: 1px solid #eee;
+                position: relative;
+                padding-left: 50%;
+            }
+            td:before {
+                position: absolute;
+                top: 6px;
+                left: 6px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                content: attr(data-label);
+                font-weight: bold;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+         Ensure the 'partials/nav' include path is correct 
+        <%- include('partials/nav') -%>
+    </header>
+    <div id="maincontent1">
+        <div class="content">
+            <h1>SendIT Company Is Here</h1>
+            <p>If you're looking for the best platform for your package to be shipped to any destination of your choice, we're here to serve the best quality, reliable service you've never experienced before.</p>
+            <a href="/order/create-order" class="button">Create Order</a>
+            <a href="/order/my-orders" class="button">Manage Orders</a>
+        </div>
+    </div>
+    <section style="background: #e3e3e3; width: 100%; padding: 20px 0;">
+        <div class="order" style="width: 90%; margin: auto;">
+            <h2>My Orders</h2>
+            <% if (orders.length === 0) { %>
+                <p>No orders found.</p>
+            <% } else { %>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sender Name</th>
+                            <th>Receiver Name</th>
+                            <th>Destination</th>
+                            <th>Pickup Station</th>
+                            <th>Package Details</th>
+                            <th>Order Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% orders.forEach(order => { %>
+                            <tr>
+                                <td><%= order.senderName %></td>
+                                <td><%= order.receiverName %></td>
+                                <td><%= order.destination %></td>
+                                <td><%= order.pickupStation %></td>
+                                <td><%= order.packageDetails %></td>
+                                <td><%= order.status %></td>
+                                <td class="action-buttons">
+                                    <button onclick="updateOrder('<%= order._id %>')">Update</button>
+                                    <button onclick="deleteOrder('<%= order._id %>')">Delete</button>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            <% } %>
+        </div>
+    </section>
+    <footer>
+        <!-- Ensure the 'partials/footer' include path is correct 
+        <%- include('partials/footer') -%>
+    </footer>
+
+    <script>
+        function updateOrder(orderId) {
+            alert("Update order with ID: " + orderId);
+        }
+
+        function deleteOrder(orderId) {
+            alert("Delete order with ID: " + orderId);
+        }
+    </script>
+</body>
+</html>
+-->

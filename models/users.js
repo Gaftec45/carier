@@ -15,7 +15,11 @@ const UserSchema = new mongoose.Schema({
     enum: ['user', 'admin'],
     default: 'user' // Default role is 'user'
   },
-  orders: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order' }]
+  orders: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order' }],
+  registrationDate: {
+    type: Date,
+    default: Date.now
+  },
 });
 
 // Add Passport Local Mongoose plugin

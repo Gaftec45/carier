@@ -1,72 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Orders</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-
-        h2 {
-            text-align: center;
-            margin-top: 20px;
-            color: #333;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-
-        th, td {
-            padding: 7px;
-            text-align: center;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        .action-buttons button {
-            padding: 8px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            font-size: 14px;
-        }
-
-        .action-buttons button:hover {
-            background-color: #ddd;
-        }
-
-        .action-buttons button + button {
-            margin-left: 8px;
-        }
-    </style>
-</head>
-<body>
-    <h2>My Orders</h2>
-    <% if (orders.length === 0) { %>
-        <p>No orders found.</p>
-    <% } else { %>
-        <table>
-            <thead>
+<div class="content-wrapper">
+    <h3>My Orders</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover order-table">
+            <thead class="thead-light">
                 <tr>
                     <th>Sender Name</th>
                     <th>Receiver Name</th>
@@ -78,40 +14,30 @@
                 </tr>
             </thead>
             <tbody>
-                <% orders.forEach(order => { %>
+                <% if (orders.length > 0) { %>
+                    <% orders.forEach(order => { %>
+                        <tr>
+                            <td><%= order.senderName %></td>
+                            <td><%= order.receiverName %></td>
+                            <td><%= order.destination %></td>
+                            <td><%= order.pickupStation %></td>
+                            <td><%= order.packageDetails %></td>
+                            <td><%= order.status %></td>
+                            <td>
+                                <span class="btn-action btn-edit" onclick="updateOrder('<%= order._id %>')"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+                                <span class="btn-action btn-delete" onclick="deleteOrder('<%= order._id %>')"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                            </td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
                     <tr>
-                        <td><%= order.senderName %></td>
-                        <td><%= order.receiverName %></td>
-                        <td><%= order.destination %></td>
-                        <td><%= order.pickupStation %></td>
-                        <td><%= order.packageDetails %></td>
-                        <td><%= order.status %></td>
-                        <td class="action-buttons">
-                            <button onclick="updateOrder('<%= order._id %>')">Update</button>
-                        <!-- </td>
-                        <td class="action-buttons"> -->
-                            <button onclick="deleteOrder('<%= order._id %>')">Delete</button>
-                        </td>
+                        <td colspan="7" class="text-center">No orders to show</td>
                     </tr>
-                <% }); %>
+                <% } %>
             </tbody>
-        </table>
-    <% } %>
-
-    <!-- JavaScript functions for update and delete actions -->
-    <script>
-        function updateOrder(orderId) {
-            // Implement your update logic here
-            alert("Update order with ID: " + orderId);
-        }
-
-        function deleteOrder(orderId) {
-            // Implement your delete logic here
-            alert("Delete order with ID: " + orderId);
-        }
-    </script>
-</body>
-</html>
+    </table>
+</div>
+</div>
 
 
 

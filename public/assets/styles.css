@@ -25,14 +25,14 @@ a{
     font-size: large;
 }
 
-.header{
+/* .header{
     font-size: 25px;
-    /* background: #000; */
+    /* background: #000; 
     color: #000000;
 }
 /*.header nav{
     background: darkcyan;
-}*/
+}
 .header ul{
     display: inline-block;
 }
@@ -45,7 +45,7 @@ a{
     list-style-type: none;
     float: inline-start;
     margin-right: 50px;
-}
+} */
 
 #maincontent{
     width: 95%;
@@ -55,14 +55,14 @@ a{
     display: inline-block;
 }
 #maincontent1{
-    width: 95%;
+    width: 90%;
     padding: 20px;
     background-image: url(/assets/img/LEAD\ BANNER.jpg);
     background-size: cover;
     display: inline-block;
 }
-#maincontent img{
-    width: 1305px;
+#maincontent, #maincontent1 img{
+    width: 97%;
     margin: auto;
 }
 
@@ -129,7 +129,7 @@ a{
 #btn2{
     float: right;
     border: none;
-    background: lightskyblue;
+    background: #2c3e50;
 }
 #btn a, #btn2 a{
     color: #fff;
@@ -137,7 +137,7 @@ a{
 #des{
     display: inline-block;
     margin: auto;
-    width: 95%;
+    width: 97%;
     padding: 20px;
     background: #eee;
 }

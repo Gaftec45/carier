@@ -28,7 +28,7 @@
         .dashboard-banner {
             background: url(/assets/img/LEAD\ BANNER.jpg) no-repeat center center;
             background-size: cover;
-            height: 300px;
+            height: 400px;
             color: #fff;
             text-align: center;
             border-radius: 0;
@@ -107,13 +107,26 @@
         .social i:hover {
             color: #3498db;
         }
+        .btn-action {
+            padding: 5px 10px;
+            color: #fff;
+            cursor: pointer;
+            margin-right: 5px;
+            border-radius: 10px;
+        }
+        .btn-edit {
+            background-color: #ffc107;
+        }
+        .btn-delete {
+            background-color: #dc3545;
+        }
         @media (max-width: 768px) {
             .footer-section {
                 flex-basis: 100%;
                 max-width: 100%;
             }
             .dashboard-banner {
-                height: 300px;
+                height: 400px;
             }
             .dashboard-banner h1 {
                 font-size: 1.5rem;
@@ -160,7 +173,7 @@
                                             <td><%= order.destination %></td>
                                             <td><%= order.pickupStation %></td>
                                             <td><%= order.packageDetails %></td>
-                                            <td><%= order.status %></td>
+                                            <td style="color: #dc3545;"><%= order.status %></td>
                                             <td>
                                                 <span class="btn-action btn-edit" onclick="updateOrder('<%= order._id %>')"><i class="fa fa-pencil" aria-hidden="true"></i></span>
                                                 <span class="btn-action btn-delete" onclick="deleteOrder('<%= order._id %>')"><i class="fa fa-trash" aria-hidden="true"></i></span>

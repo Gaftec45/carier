@@ -48,7 +48,7 @@ a{
 } */
 
 #maincontent{
-    width: 95%;
+    width: 100%;
     padding: 20px;
     background-image: url(/assets/img/deli.jpg);
     background-size: cover;
@@ -62,7 +62,7 @@ a{
     display: inline-block;
 }
 #maincontent, #maincontent1 img{
-    width: 97%;
+    width: 100%;
     margin: auto;
 }
 
@@ -97,7 +97,7 @@ a{
 
 .content{
     width: 370px;
-    height: 340px;
+    height: 360px;
     padding: 20px;
     background: #eee;
     margin-top: 200px;
@@ -137,7 +137,7 @@ a{
 #des{
     display: inline-block;
     margin: auto;
-    width: 97%;
+    width: 100%;
     padding: 20px;
     background: #eee;
 }

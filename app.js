@@ -7,7 +7,8 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const accountRoutes = require('./routes/account');
 const dashRoutes = require('./routes/dashboard');
-const {initialize} =require('./passport/passConfig')
+const {initialize} =require('./passport/passConfig');
+const { initializess } = require('./passport/passportForAdmin');
 const User = require('./models/users');
 const Order = require('./models/orders');
 const orderRoute = require('./routes/order');
@@ -45,11 +46,12 @@ passport.use(User.createStrategy()); // Assuming passport-local-mongoose is used
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+
 initialize(passport,
     id => users.find(user => user.id === id),
     email => users.find(user => user.email === email)
 )
-
+initializess(passport)
 // Set up express-flash middleware
 app.use(flash());
 

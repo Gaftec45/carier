@@ -47,7 +47,18 @@
     </style>
 </head>
 <body>
-    <div class="container">
+
+    <h1>Admin Page</h1>
+    <div>
+        <% users.forEach(user => { %>
+            <h2>User: <%= user.username %></h2>
+            <% user.orders.forEach(order => { %>
+                <p>Order ID: <%= order._id %></p>
+                <!-- Display other order details as needed -->
+            <% }); %>
+        <% }); %>
+    </div>
+   <!-- <div class="container">
         <h1>User Dashboard</h1>
         <table>
             <thead>
@@ -120,6 +131,6 @@
             }
         }
     }
-    </script>
+    </script> -->
 </body>
 </html>

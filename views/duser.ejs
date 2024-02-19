@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f0f0f0;
+        }
+        select {
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 13px;
+        }
+        button {
+            padding: 6px 6px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <% if (users.length > 0) { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Email</th>
+                        <th>Sender Name</th>
+                        <th>Receiver Name</th>
+                        <th>Destination</th>
+                        <th>Pickup Station</th>
+                        <th>Package Details</th>
+                        <th>Order Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% users.forEach(user => { %>
+                        <% user.orders.forEach((order, index) => { %>
+                            <tr>
+                                <% if(index === 0) { %>
+                                <td rowspan="<%= user.orders.length %>"><%= user.username %></td>
+                                <td rowspan="<%= user.orders.length %>"><%= user.email %></td>
+                                <% } %>
+                                <td><%= order.senderName %></td>
+                                <td><%= order.receiverName %></td>
+                                <td><%= order.destination %></td>
+                                <td><%= order.pickupStation %></td>
+                                <td><%= order.packageDetails %></td>
+                                <td><%= order.createdAt.toDateString() %></td>
+                                <td>
+                                    <form action="/admin/updateOrderStatus/<%= order._id %>" method="POST">
+                                        <select name="status" required>
+                                            <option value="pending" <%= order.status === 'pending' ? 'selected' : '' %>>Pending</option>
+                                            <option value="shipped" <%= order.status === 'shipped' ? 'selected' : '' %>>Shipped</option>
+                                            <option value="delivered" <%= order.status === 'delivered' ? 'selected' : '' %>>Delivered</option>
+                                            <option value="cancelled" <%= order.status === 'cancelled' ? 'selected' : '' %>>Cancelled</option>
+                                        </select>
+                                        <!-- <br> -->
+                                        <button style="float: right;" type="submit"><i class="fas fa-check"></i> </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }); %>
+                        <% if(user.orders.length === 0) { %>
+                            <tr>
+                                <td><%= user.username %></td>
+                                <td><%= user.email %></td>
+                                <td colspan="7">No orders found.</td>
+                            </tr>
+                        <% } %>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>No users found.</p>
+        <% } %>
+    </div>
+    <footer class="footer">
+        &copy; 2024 Your Website. All rights reserved.
+    </footer>
+</body>
+</html>

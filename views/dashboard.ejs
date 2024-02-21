@@ -177,8 +177,12 @@
                                             <td><%= order.packageDetails %></td>
                                             <td style="color: #dc3545;"><%= order.status %></td>
                                             <td>
-                                                <span class="btn-action btn-edit" data-orderid="<%= order._id %>"><i class="fa fa-pencil" aria-hidden="true"></i></span>
-                                                <span class="btn-action btn-delete" data-orderid="<%= order._id %>"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                                                <% if (order.status === 'pending') { %>
+                                                    <span class="btn-action btn-edit" data-orderid="<%= order._id %>"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+                                                    <span class="btn-action btn-delete" data-orderid="<%= order._id %>"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                                                <% } else { %>
+                                                    <span>Not editable</span>
+                                                <% } %>
                                             </td>
                                         </tr>
                                     <% }); %>

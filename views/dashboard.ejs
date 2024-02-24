@@ -181,7 +181,8 @@
                                                     <span class="btn-action btn-edit" data-orderid="<%= order._id %>"><i class="fa fa-pencil" aria-hidden="true"></i></span>
                                                     <span class="btn-action btn-delete" data-orderid="<%= order._id %>"><i class="fa fa-trash" aria-hidden="true"></i></span>
                                                 <% } else { %>
-                                                    <span>Not editable</span>
+                                                    <span style="background-color: #ffc107;" class="btn-action"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+                                                    <span style="background-color: #dc3545;" class="btn-action"><i class="fa fa-trash" aria-hidden="true"></i></span>
                                                 <% } %>
                                             </td>
                                         </tr>

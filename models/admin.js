@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const adminSchema = new mongoose.Schema({
-    email: {
+    username: {
         type: String,
         required: true, // Ensure email is required
         unique: true, // Ensure email is unique
@@ -19,6 +19,6 @@ const adminSchema = new mongoose.Schema({
 });
 
 // Create Admin model
-const Admin = mongoose.model('Admin', adminSchema);
+const Admin = mongoose.model('admin', adminSchema);
 
 module.exports = Admin;

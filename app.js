@@ -13,8 +13,10 @@ const User = require('./models/users');
 const Order = require('./models/orders');
 const orderRoute = require('./routes/order');
 const adminRoute = require('./routes/admin');
+const createAdmin = require('./createAdmin');
 const URI =process.env.MONGODB_URI || process.env.MONGO_URI;
 const app = express();
+
 
 
 async function mongoDB() {
@@ -71,11 +73,13 @@ app.use(express.static('public'));
 app.use('/account', accountRoutes);
 app.use('/user', dashRoutes);
 app.use('/order', orderRoute);
-app.use('/', adminRoute)
+app.use('/admin', adminRoute)
 
 app.get('/', (req, res) => {
     res.render('index'); 
 });
+
+// createAdmin()
 
 // Listening on port from environment variable or fallback to 4500
 async function startServer() {

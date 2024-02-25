@@ -3,10 +3,6 @@ const mongoose = require('mongoose');
 const crypto = require('crypto');
 
 
-
-const URI =process.env.MONGODB_URI || process.env.MONGO_URI;
-mongoose.connect(URI); // Update your MongoDB connection string
-
 const createAdmin = async () => {
     Admin.findOne({ username: 'admin' }) 
         .then(user => {

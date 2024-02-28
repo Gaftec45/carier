@@ -31,7 +31,7 @@ function isAdmin(req, res, next) {
         return next();
     }
     // Redirect or send error message if user is not admin
-    res.redirect('/admin/login');
+    res.redirect('/login');
 }
 
 module.exports = { 

@@ -8,7 +8,6 @@ const mongoose = require('mongoose');
 const accountRoutes = require('./routes/account');
 const dashRoutes = require('./routes/dashboard');
 const {initialize} =require('./passport/passConfig');
-const { initializess } = require('./passport/passportForAdmin');
 const User = require('./models/users');
 const Order = require('./models/orders');
 const orderRoute = require('./routes/order');
@@ -22,10 +21,10 @@ const app = express();
 async function mongoDB() {
   try {
       await mongoose.connect(URI, {
-          serverSelectionTimeoutMS: 5000 // Extend timeout to 5000ms or more
+          serverSelectionTimeoutMS: 5000
       });
       console.log('Connected to MongoDB');
-      return mongoose.connection; // Return the mongoose connection object
+      return mongoose.connection; 
   } catch (error) {
       console.error('Error connecting to MongoDB:', error);
       throw error;
@@ -44,7 +43,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Passport Configuration
-passport.use(User.createStrategy()); // Assuming passport-local-mongoose is used for User model
+passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -53,8 +52,7 @@ initialize(passport,
     id => users.find(user => user.id === id),
     email => users.find(user => user.email === email)
 )
-initializess(passport)
-// Set up express-flash middleware
+initialize(passport);
 app.use(flash());
 
 mongoose.set('debug', true);
@@ -62,11 +60,9 @@ mongoose.set('debug', true);
 // Set up view engine
 app.set('view engine', 'ejs');
 
-// Body parser middleware to parse request bodies
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Serve static files from the 'public' directory
 app.use(express.static('public'));
 
 // Routes
@@ -81,12 +77,11 @@ app.get('/', (req, res) => {
 
 // createAdmin()
 
-// Listening on port from environment variable or fallback to 4500
 async function startServer() {
   try {
-      await mongoDB(); // Wait for MongoDB connection to be established
+      await mongoDB();
 
-      const PORT = process.env.PORT_I || 4500; // Adjust the default port as needed
+      const PORT = process.env.PORT_I || 4500;
       app.listen(PORT, () => {
           console.log(`Server running on port ${PORT}`);
       });

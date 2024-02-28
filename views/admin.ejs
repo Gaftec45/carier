@@ -13,6 +13,47 @@
             margin: 0;
             padding: 0;
         }
+        .admin-details {
+            /* background-color: #f9f9f9; */
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .admin-details h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .admin-info {
+            font-size: 16px;
+            background-color: #13122c;
+            color: #fff;
+            width: 270px;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        .admin-info p {
+            margin: 10px;
+        }
+        .admin-info p a{
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 16px;
+            background: #4db8ae;
+            padding: 4px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .admin-info p a:hover{
+            background: #5da49d;
+        }
+
+        .admin-info strong {
+            font-weight: bold;
+            color: #ffffff;
+        }
         .container {
             max-width: 1200px;
             margin: 20px auto;
@@ -74,6 +115,14 @@
     </style>
 </head>
 <body>
+    <div class="admin-details">
+        <h2>Admin</h2>
+        <div class="admin-info">
+            <p><strong>Username:</strong> <%= admin.username %></p>
+            <p><strong>Email:</strong> <%= admin.email %></p>
+            <p><a href="/account/logout">log out</a></p>
+        </div>
+    </div>
     <div class="container">
         <h1>Admin Dashboard</h1>
         <% if (users.length > 0) { %>

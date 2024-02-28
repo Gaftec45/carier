@@ -5,7 +5,6 @@ const crypto = require('crypto')
 
 function initialize(passport) {
 
-    // Function to verify the password
     function verifyPassword(storedPassword, submittedPassword) {
         const hashedSubmittedPassword = crypto.createHash('sha256').update(submittedPassword).digest('hex');
         return storedPassword === hashedSubmittedPassword;
@@ -42,55 +41,3 @@ function initialize(passport) {
 }
 
 module.exports = { passport, initialize };
-
-    /*
-    // Function to verify the password
-    function verifyPassword(storedPassword, submittedPassword) {
-        const hashedSubmittedPassword = crypto.createHash('sha256').update(submittedPassword).digest('hex');
-        return storedPassword === hashedSubmittedPassword;
-    }
-
-    passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
-        try {
-            const user = await User.findOne({ email });
-            if (!user) {
-                return done(null, false, { message: 'No user with that email' });
-            }
-            const hashedSubmittedPassword = crypto.createHash('sha256').update(password).digest('hex');
-            if (user.password !== hashedSubmittedPassword) {
-                return done(null, false, { message: 'Incorrect password.' });
-            }
-            return done(null, user);
-        } catch (error) {
-            return done(error);
-        }
-    })); 
-
-    passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
-        try {
-            const user = await User.findOne({ email });
-            if (!user) {
-                return done(null, false, { message: 'No user with that email' });
-            }
-            // Compare passwords securely (not recommended to use plain text comparison)
-            if (password === user.password) { 
-                return done(null, user);
-            } else {
-                return done(null, false, { message: 'Incorrect password.' });
-            }
-        } catch (error) {
-            return done(error);
-        }
-    }));
-
-
-    passport.serializeUser((user, done) => {
-        done(null, user.id);
-    });
-
-    passport.deserializeUser(async (id, done) => {
-        User.findById(id, function(err, user) {
-            done(err, user);
-        });
-    });
-    */

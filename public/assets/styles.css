@@ -25,28 +25,6 @@ a{
     font-size: large;
 }
 
-/* .header{
-    font-size: 25px;
-    /* background: #000; 
-    color: #000000;
-}
-/*.header nav{
-    background: darkcyan;
-}
-.header ul{
-    display: inline-block;
-}
-.header a{
-    color: #000; 
-    text-decoration: none;
-    font-size: 30px;
-}
-.header li{
-    list-style-type: none;
-    float: inline-start;
-    margin-right: 50px;
-} */
-
 #maincontent{
     width: 100%;
     padding: 20px;

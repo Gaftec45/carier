@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Order = require('../models/orders'); // Assuming you have an Order model
-const User = require('../models/users'); // Your User model
+const Order = require('../models/orders');
+const User = require('../models/users');
 const { checkAuthenticated } = require('../middleware/authMiddleware');
 
 router.get('/create-order', checkAuthenticated, (req, res)=>{
@@ -11,12 +11,11 @@ router.get('/create-order', checkAuthenticated, (req, res)=>{
 router.post('/create-order', checkAuthenticated, async (req, res) => {
   try {
     const { senderName, receiverName, destination, pickupStation, packageDetails, status} = req.body;
-    const userId = req.user._id; // Assuming you're using passport.js for authentication
+    const userId = req.user._id;
 
     const order = new Order({ user: userId, senderName, receiverName, destination, pickupStation, packageDetails, status });
     await order.save();
 
-    // Add order to the user's orders array
     await User.findByIdAndUpdate(userId, { $push: { orders: order._id } });
 
     res.redirect('/user/dashboard');
@@ -26,12 +25,11 @@ router.post('/create-order', checkAuthenticated, async (req, res) => {
   }
 });
 
-// Route to render the page displaying the user's orders
 router.get('/orders', async (req, res) => {
     try {
-        const userId = req.user._id; // Assuming you're using passport.js for authentication
+        const userId = req.user._id;
         const orders = await Order.find({ user: userId });
-        res.render('orderdash', { orders }); // Pass orders data to the EJS template
+        res.render('orderdash', { orders });
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
@@ -43,7 +41,6 @@ router.get('/orders/:orderId', checkAuthenticated, async (req, res) => {
       const orderId = req.params.orderId;
       const order = await Order.findById(orderId);
 
-      // Render the update-order.ejs view and pass the order variable
       res.render('update-order', { order });
   } catch (error) {
       console.error('Error rendering update-order view:', error);
@@ -75,7 +72,6 @@ router.get('/orders/:orderId', checkAuthenticated, async (req, res) => {
     }
 })
   
-  // Delete order route
   router.delete('/orders/:orderId', async (req, res) => {
       const orderId = req.params.orderId;
 
